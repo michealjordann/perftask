@@ -1,5 +1,11 @@
 import time
 import random
+import tkinter as tk
+#GUI
+r = tk.Tk()
+r.title("Reaction Time Test By Tanush Pusulrui")
+r.geometry("400x300")
+#main game
 going = True
 scores = []
 def reactest():
@@ -12,8 +18,8 @@ def reactest():
             start = time.time()
             letter = input("x")
             end = time.time()
-            rtime = end - start
-            if rtime <= 0:
+            rtime = round(end - start,3)
+            if rtime <= 0.101:
                 print("you pressed enter too early! try again")
                 break
             if letter == "":
