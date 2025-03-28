@@ -8,12 +8,16 @@ def reactest():
         begin = input("Type in go to start.")
         if begin == "go":
             print("As soon as you see the letter X appear in the terminal, press Enter.")
-            wait = time.sleep(random.randint(2,6))
+            time.sleep(random.randint(2,6))
             start = time.time()
             letter = input("x")
             end = time.time()
-            if 
-                print("Nice! Your reaction time is", end-start)
+            rtime = end - start
+            if rtime <= 0:
+                print("you pressed enter too early! try again")
+                break
+            if letter == "":
+                print("Nice! Your reaction time is", rtime)
             else:
                 print("Do not type anything but enter! Try again.")
                 break
