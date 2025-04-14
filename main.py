@@ -1,45 +1,58 @@
 import time
 import random
-import tkinter as tk
-#leaderboard setup
-def ldbsetup():
-    user = input("type in your name to save your time to the leaderboard.")
-    names.append(user)
+
+def ldbsetup(name, best_score):
+    with open("leaderboard.txt", "a") as file:
+        file.write(f"{name}: {best_score} seconds\n")
 
 def ldb():
-    print("add a way to show the best time here with rtime idk how yet")
-#main game
-going = True
-scores = []
-names = []
+    try:
+        with open("leaderboard.txt", "r") as file:
+            print("Leaderboard:")
+            print(file.read())
+    except FileNotFoundError:
+        print("No leaderboard file found, creating one now. If you did not save a score yet, do so or no leaderboard will show up.")
+        with open("leaderboard.txt", "w") as file:
+            file.write("") 
+
 def reactest():
-    while going == True:
-        #begin test
-        begin = input("Type in go to start, or type in 1 for leaderboard.")
-        if begin == "go":
-            ldbsetup()
-            print("As soon as you see the letter X appear in the terminal, press Enter.")
-            time.sleep(random.randint(2,6))
+    scores = []  
+
+    while True:
+        choice = input("Type 'go' to test your reaction, 'done' to save your best score, or '1' to view leaderboard: ")
+
+        if choice == "1":
+            ldb()
+
+        elif choice == "go":
+            input("Press Enter to begin.")
+            print("Wait until you see X in the terminal")
+            time.sleep(random.randint(2, 6))
             start = time.time()
-            letter = input("x")
+            user_input = input("X")
             end = time.time()
-            rtime = round(end - start,3)
+            rtime = round(end - start, 3)
+
             if rtime <= 0.101:
-                print("you pressed enter too early! try again")
+                print("Too early! Try again.")
                 continue
-            if letter == "":
-                print("Nice! Your reaction time is", rtime)
+
+            if user_input == "":
                 scores.append(rtime)
+                print(f"Reaction time: {rtime} seconds.")
             else:
-                print("Do not type anything but enter! Try again.")
-                continue
-        #leaderboard
-        elif begin == "1":
-            print("pravin rasiah")
+                print("Only Press Enter! Try Again. ")
+
+        elif choice == "done":
+            if scores:
+                best = min(scores)
+                print(f"Your best reaction time this session: {best} seconds.")
+                name = input("Enter your name to save your score: ")
+                ldbsetup(name, best)
+                scores.clear()  
+            else:
+                print("No recorded scores yet.")
         else:
-            print("wrong input to start")
-            continue
-            
+            print("Invalid input.")
+
 reactest()
-
-
