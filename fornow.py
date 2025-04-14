@@ -1,6 +1,5 @@
 import time
 import random
-import tkinter as tk
 #leaderboard setup
 rtime = 0
 going = True
