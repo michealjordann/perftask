@@ -1,6 +1,6 @@
 import time
 import random
-
+#leaderboard setup and functionality(ldb means leaderboard)
 def ldbsetup(name, best_score):
     with open("leaderboard.txt", "a") as file:
         file.write(f"{name}: {best_score} seconds\n")
@@ -11,10 +11,11 @@ def ldb():
             print("Leaderboard:")
             print(file.read())
     except FileNotFoundError:
+        #create leaderboard if not found
         print("No leaderboard file found, creating one now. If you did not save a score yet, do so or no leaderboard will show up.")
         with open("leaderboard.txt", "w") as file:
             file.write("") 
-
+#Main reaction time game and saving score to text file
 def reactest():
     scores = []  
 
@@ -34,14 +35,14 @@ def reactest():
             rtime = round(end - start, 3)
 
             if rtime <= 0.101:
-                print("Too early! Try again.")
+                print("Too early. Try again.")
                 continue
 
             if user_input == "":
                 scores.append(rtime)
                 print(f"Reaction time: {rtime} seconds.")
             else:
-                print("Only Press Enter! Try Again. ")
+                print("Only Press Enter. Try Again. ")
 
         elif choice == "done":
             if scores:
